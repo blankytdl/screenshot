@@ -1,4 +1,4 @@
-dxcam
+dxcam[cv2]
 keyboard
 pillow
 pystray
