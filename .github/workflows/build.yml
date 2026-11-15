@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build:
@@ -30,8 +30,20 @@ jobs:
 
       - name: Restore source and compile
         run: |
-          python -c "import base64,zlib,pathlib; pathlib.Path('GameShot.py').write_bytes(zlib.decompress(base64.b64decode(pathlib.Path('GameShot.py.zlib.b64').read_text(encoding='ascii'))))"
+          python -c "import base64,zlib,pathlib; p=pathlib.Path('GameShot.py'); q=pathlib.Path('GameShot.py.zlib.b64'); p.write_bytes(zlib.decompress(base64.b64decode(q.read_text(encoding='ascii')))) if not p.exists() and q.exists() else None"
           python -m py_compile GameShot.py
+
+      - name: Commit expanded source to repository
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        shell: pwsh
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add GameShot.py
+          git rm --ignore-unmatch GameShot.py.zlib.b64
+          if (git diff --cached --quiet) { exit 0 }
+          git commit -m "Add expanded GameShot source [skip ci]"
+          git push
 
       - name: Build executable
         run: python build.py
