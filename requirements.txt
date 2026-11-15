@@ -1,0 +1,7 @@
+dxcam
+keyboard
+pillow
+pystray
+pyinstaller
+numpy==1.26.4
+comtypes
