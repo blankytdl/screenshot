@@ -6,8 +6,8 @@ BUILD THE APP
   2. Double-click build.bat
   3. Your app: dist\GameShot.exe (it asks for Administrator on launch)
 
-The build script restores GameShot.py from the compressed source payload on a fresh checkout.
-The icon is generated automatically when needed.
+The repository contains GameShot.py. The build script generates icon.ico
+and icon.png automatically when they are missing.
 
 RUN WITHOUT BUILDING
   pip install -r requirements.txt
