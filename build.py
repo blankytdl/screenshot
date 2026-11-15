@@ -29,6 +29,9 @@ cmd = [
     "--collect-all", "pystray",
     "--collect-all", "numpy",
     "--collect-all", "PIL",
+    # DXcam imports OpenCV dynamically for its default color processor.
+    "--collect-all", "cv2",
+    "--hidden-import", "cv2",
     "--hidden-import", "pystray._win32",
     "--hidden-import", "keyboard._winkeyboard",
     "--hidden-import", "PIL.ImageTk",
