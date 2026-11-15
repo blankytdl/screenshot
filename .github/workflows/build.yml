@@ -28,6 +28,9 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt
 
+      - name: Verify DXcam OpenCV support
+        run: python -c "import cv2, dxcam; print('OpenCV', cv2.__version__); print('DXcam installed')"
+
       - name: Restore source and compile
         run: |
           python -c "import base64,zlib,pathlib; p=pathlib.Path('GameShot.py'); q=pathlib.Path('GameShot.py.zlib.b64'); p.write_bytes(zlib.decompress(base64.b64decode(q.read_text(encoding='ascii')))) if not p.exists() and q.exists() else None"
